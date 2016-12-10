@@ -6,9 +6,8 @@ After=network.target
 User={{ parity_user }}
 Group={{ parity_group }}
 
-Type=forking
-PIDFile={{ parity_home }}/parity.pid
-ExecStart={{ parity_dst_bindir }}/parity daemon {{ parity_home }}/parity.pid --log-file {{ parity_home }}/parity.log {{ parity_extra_args }}
+Type=simple
+ExecStart={{ parity_dst_bindir }}/parity {{ parity_extra_args }}
 
 Restart=always
 PrivateTmp=true
