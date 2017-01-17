@@ -2,3 +2,5 @@
 - name: reload systemd
   command: systemctl daemon-reload
 
+- name: stop parity
+  service: name=parity state=stopped

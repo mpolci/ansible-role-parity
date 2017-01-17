@@ -30,6 +30,8 @@
 - name: "install parity .deb package"
   apt: deb="/root/parity.deb"
   when: downloaded is defined and downloaded.changed
+  notify:
+    - stop parity
 
 - name: "delete parity .deb package"
   file: path="/root/parity.deb" state=absent
