@@ -35,7 +35,7 @@
 
 - name: "delete parity .deb package"
   file: path="/root/parity.deb" state=absent
-  when: downloaded is defined and downloaded.changed
+#  when: downloaded is defined and downloaded.changed
 
 - block:
   - name: "copy chain file"
