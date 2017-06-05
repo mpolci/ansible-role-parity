@@ -1,7 +1,7 @@
 ---
 
 - group: name={{ parity_group }} system=yes state=present
-- user: name={{ parity_user }} group={{ parity_group }} home={{ parity_home }} shell=/bin/false state=present
+- user: name={{ parity_user }} group={{ parity_group }} home={{ parity_home }} state=present
 
 #- name: download parity bin file
 #  get_url: url={{ parity_source }} dest={{ parity_dst_bindir }}/parity checksum={{ parity_sum }}
