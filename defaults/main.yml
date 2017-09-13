@@ -9,3 +9,5 @@ parity_deb_url: http://d1h4xl4cr1h0mo.cloudfront.net/v1.4.7/x86_64-unknown-linux
 parity_deb_sum: md5:a1438a26ef71cb1dc5d9a68c052cd013
 parity_version_string: 1.4.7
 parity_chain_file: ""
+ethereum_blockchain_warning: 180
+ethereum_blockchain_critical: 600
