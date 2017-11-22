@@ -7,7 +7,7 @@ User={{ parity_user }}
 Group={{ parity_group }}
 
 Type=simple
-ExecStart={{ parity_dst_bindir }}/parity {{ parity_extra_args }}
+ExecStart={{ parity_dst_bindir }}/parity --config {{ parity_home }}/config.toml {{ parity_extra_args }}
 
 Restart=always
 PrivateTmp=true

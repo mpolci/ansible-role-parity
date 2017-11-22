@@ -37,6 +37,16 @@
   file: path="/root/parity.deb" state=absent
 #  when: downloaded is defined and downloaded.changed
 
+- name: "parity config file"
+  template:
+    src: templates/parity_config.toml.j2
+    dest: "{{ parity_home }}/config.toml"
+    owner: "{{ parity_user }}"
+    group: "{{ parity_group }}"
+    mode: 0644
+  notify:
+    - stop parity
+
 - block:
   - name: "copy chain file"
     copy: src={{ parity_chain_file }} dest={{ parity_home }} owner={{ parity_user }} group={{ parity_group }} mode=0644
