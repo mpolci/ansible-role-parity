@@ -59,6 +59,11 @@
   notify:
     - reload systemd
 
+- name: "sync parity data"
+  include_tasks: sync-blockchain.yml
+  tags: sync-parity-data
+  when: not( (sync_data_from is undefined) or (sync_data_from is none) or (sync_data_from | trim == '') )
+
 - meta: flush_handlers
 
 - name: "service parity enabled"

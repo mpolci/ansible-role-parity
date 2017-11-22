@@ -1,0 +1,47 @@
+---
+- assert:
+    that:
+      - not( (sync_data_from is undefined) or (sync_data_from is none) or (sync_data_from | trim == '') )
+
+- name: "copy ssh private key file"
+  copy: src=files/id_rsa_sync
+        dest=~/.ssh/
+        mode=0600
+
+- name: "Set authorized key on source host"
+  authorized_key:
+    user: root
+    state: present
+    key: "{{ lookup('file', 'files/id_rsa_sync.pub') }}"
+  delegate_to: "{{ sync_data_from }}"
+
+
+- name: "get source host key"
+  command: "ssh-keyscan {{ hostvars[sync_data_from]['ansible_host'] }}"
+  changed_when: false
+  register: keyscan
+
+- name: "add source host key to known hosts"
+  known_hosts:
+    name: "{{ hostvars[sync_data_from]['ansible_host'] }}"
+    key: "{{ keyscan.stdout }}"
+
+- name: "service parity stopped"
+  service: name={{ systemd_service_name }} state=stopped
+
+- name: "sync parity data directory"
+  command: "rsync -av --delete-after --exclude 'network/key' -e \"ssh -i $HOME/.ssh/id_rsa_sync\" root@{{ hostvars[sync_data_from]['ansible_host'] }}:{{ parity_home }}/.local {{ parity_home }}"
+
+- name: "remove ssh private key file"
+  file:
+    name: files/id_rsa_sync
+    state: absent
+
+- name: "remove authorized key on source host"
+  authorized_key:
+    user: root
+    state: absent
+    key: "{{ lookup('file', 'files/id_rsa_sync.pub') }}"
+  delegate_to: "{{ sync_data_from }}"
+
+
