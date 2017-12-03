@@ -26,11 +26,41 @@
     name: "{{ hostvars[sync_data_from]['ansible_host'] }}"
     key: "{{ keyscan.stdout }}"
 
-- name: "service parity stopped"
-  service: name={{ systemd_service_name }} state=stopped
+- name: "check for local parity service status"
+  shell: service parity status
+  ignore_errors: true
+  register: local_service_status
 
-- name: "sync parity data directory"
+- name: "service parity stopped if exists and running"
+  service: name={{ systemd_service_name }} state=stopped
+  when: local_service_status.rc | int == 0
+
+- name: "sync parity data directory - step 1"
   command: "rsync -av --delete-after --exclude 'network/key' -e \"ssh -i $HOME/.ssh/id_rsa_sync\" root@{{ hostvars[sync_data_from]['ansible_host'] }}:{{ parity_home }}/.local {{ parity_home }}"
+  ignore_errors: true
+
+# Perform a second sync after stoped the parity service
+
+- name: "check for remote {{ systemd_service_name }} service status"
+  shell: service {{ systemd_service_name }} status
+  delegate_to: "{{ sync_data_from }}"
+  ignore_errors: true
+  register: remote_service_status
+
+- block:
+    - name: "source service {{ systemd_service_name }} stopped"
+      service: name={{ systemd_service_name }} state=stopped
+      delegate_to: "{{ sync_data_from }}"
+
+    - name: "sync parity data directory - step 2"
+      command: "rsync -av --delete-after --exclude 'network/key' -e \"ssh -i $HOME/.ssh/id_rsa_sync\" root@{{ hostvars[sync_data_from]['ansible_host'] }}:{{ parity_home }}/.local {{ parity_home }}"
+
+    - name: "source service {{ systemd_service_name }} started"
+      service: name={{ systemd_service_name }} state=started
+      delegate_to: "{{ sync_data_from }}"
+  when: remote_service_status.rc | int == 0
+
+# Cleanup
 
 - name: "remove ssh private key file"
   file:
