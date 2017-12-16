@@ -28,7 +28,8 @@
 
 - name: "check for local parity service status"
   shell: service parity status
-  ignore_errors: true
+  changed_when: False
+  ignore_errors: True
   register: local_service_status
 
 - name: "service parity stopped if exists and running"
@@ -36,7 +37,7 @@
   when: local_service_status.rc | int == 0
 
 - name: "sync parity data directory - step 1"
-  command: "rsync -av --delete-after --exclude 'network/key' -e \"ssh -i $HOME/.ssh/id_rsa_sync\" root@{{ hostvars[sync_data_from]['ansible_host'] }}:{{ parity_home }}/.local {{ parity_home }}"
+  command: "rsync -av --delete-before --exclude 'network/key' -e \"ssh -i $HOME/.ssh/id_rsa_sync\" root@{{ hostvars[sync_data_from]['ansible_host'] }}:{{ parity_home }}/.local {{ parity_home }}"
   ignore_errors: true
 
 # Perform a second sync after stoped the parity service
@@ -44,7 +45,8 @@
 - name: "check for remote {{ systemd_service_name }} service status"
   shell: service {{ systemd_service_name }} status
   delegate_to: "{{ sync_data_from }}"
-  ignore_errors: true
+  ignore_errors: True
+  changed_when: False
   register: remote_service_status
 
 - block:
