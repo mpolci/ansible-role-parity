@@ -1,4 +1,6 @@
 ---
+- include: setup-debian-9.yml
+  when: ansible_os_family == 'Debian' and ansible_distribution_major_version == '9'
 
 - group: name={{ parity_group }} system=yes state=present
 - user: name={{ parity_user }} group={{ parity_group }} home={{ parity_home }} state=present

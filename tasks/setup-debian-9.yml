@@ -1,0 +1,16 @@
+
+
+
+- name: "download libssl1.0.0 .deb package"
+  get_url:
+    url: http://ftp.debian.org/debian/pool/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u7_amd64.deb
+    dest: /root/libssl1.0.0.deb
+    checksum: sha256:d99de2cdca54484d23badc5683c7211b3a191977272d9e5281837af863dcdd56
+  register: downloaded_libssl
+
+- name: "install libssl1.0.0 .deb package"
+  apt: deb="/root/libssl1.0.0.deb"
+  when: downloaded_libssl is defined and downloaded_libssl.changed
+
+- name: "delete libssl1.0.0 .deb package"
+  file: path="/root/libssl1.0.0.deb" state=absent
