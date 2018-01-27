@@ -11,4 +11,4 @@ parity_version_string: 1.7.13
 parity_chain_file: ""
 ethereum_blockchain_warning: 180
 ethereum_blockchain_critical: 600
-parity_cache_size: 128
+parity_cache_size:  "{{ [4096, (ansible_memtotal_mb * 0.5 - 256) | int | abs] | min }}"
