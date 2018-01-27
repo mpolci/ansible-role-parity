@@ -1,11 +1,21 @@
 
 
+- name: "check libssl"
+  shell: "ldconfig -p | grep libssl.so.1.0.0"
+  register: libssl_test
+  ignore_errors: yes
+  failed_when: false
+  changed_when: false
+  check_mode: no
+
+- set_fact: libssl_installed={{ libssl_test.rc == 0 }}
 
 - name: "download libssl1.0.0 .deb package"
   get_url:
     url: http://ftp.debian.org/debian/pool/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u7_amd64.deb
     dest: /root/libssl1.0.0.deb
     checksum: sha256:d99de2cdca54484d23badc5683c7211b3a191977272d9e5281837af863dcdd56
+  when: not libssl_installed
   register: downloaded_libssl
 
 - name: "install libssl1.0.0 .deb package"
