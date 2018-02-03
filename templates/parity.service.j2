@@ -13,9 +13,9 @@ Restart=always
 PrivateTmp=true
 TimeoutStopSec=90s
 TimeoutStartSec=10s
-RestartSec=10s
-StartLimitIntervalSec=4h
-StartLimitBurst=1440
+RestartSec=15s
+StartLimitInterval=4h
+StartLimitBurst=500
 
 [Install]
 WantedBy=multi-user.target
