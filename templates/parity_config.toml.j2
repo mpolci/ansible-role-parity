@@ -4,3 +4,15 @@ warp = false
 [footprint]
 cache_size = {{ parity_cache_size }}
 scale_verifiers = true
+
+[rpc]
+disable = false
+port = {{ parity_rpc_port }}
+interface = "{{ parity_rpc_interface }}"
+#cors = "null"
+#apis = ["web3", "eth", "net", "parity", "traces", "rpc", "secretstore"]
+apis = ["web3", "eth", "net", "rpc"]
+hosts = ["all"]
+
+[dapps]
+disable = true

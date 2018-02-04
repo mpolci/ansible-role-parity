@@ -12,3 +12,6 @@ parity_chain_file: ""
 ethereum_blockchain_warning: 180
 ethereum_blockchain_critical: 600
 parity_cache_size:  "{{ [4096, (ansible_memtotal_mb * 0.5 - 256) | int | abs] | min }}"
+parity_rpc_port: 8545
+parity_rpc_interface: local
+parity_rpc_allowed_ip: []
