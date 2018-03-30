@@ -8,7 +8,7 @@ parity_extra_args:
 parity_deb_url: https://parity-downloads-mirror.parity.io/v1.7.13/x86_64-unknown-linux-gnu/parity_1.7.13_amd64.deb
 parity_deb_sum: sha256:5acb636cc1c2aa40973664faa56b58b4a881cf5170534425cbeae6230dce90be
 parity_version_string: 1.7.13
-parity_chain_file: ""
+parity_chain_file:
 ethereum_blockchain_warning: 180
 ethereum_blockchain_critical: 600
 parity_cache_size:  "{{ [4096, (ansible_memtotal_mb * 0.5 - 256) | int | abs] | min }}"
