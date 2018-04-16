@@ -1,5 +1,5 @@
 ---
-- include: setup-debian-9.yml
+- include_tasks: setup-debian-9.yml
   when: ansible_os_family == 'Debian' and ansible_distribution_major_version == '9'
 
 - group: name={{ parity_group }} system=yes state=present
@@ -77,6 +77,6 @@
   service: name={{ systemd_service_name }} enabled=yes state=started
 
 - name: "monitoring"
-  include: monitoring.yml
+  include_tasks: monitoring.yml
   when: icinga_server is defined
   tags: monitoring
