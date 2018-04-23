@@ -62,7 +62,7 @@
     - reload systemd
 
 - name: "sync parity data"
-  include_tasks: sync-blockchain.yml
+  import_tasks: sync-blockchain.yml
   tags: sync-parity-data
   when: not( (sync_data_from is undefined) or (sync_data_from is none) or (sync_data_from | trim == '') )
 
@@ -77,6 +77,6 @@
   service: name={{ systemd_service_name }} enabled=yes state=started
 
 - name: "monitoring"
-  include_tasks: monitoring.yml
+  import_tasks: monitoring.yml
   when: icinga_server is defined
   tags: monitoring
