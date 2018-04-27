@@ -15,3 +15,4 @@ parity_cache_size:  "{{ [4096, (ansible_memtotal_mb * 0.5 - 256) | int | abs] | 
 parity_rpc_port: 8545
 parity_rpc_interface: local
 parity_rpc_allowed_ip: []
+parity_warp: true
