@@ -5,9 +5,9 @@ parity_dst_bindir: /usr/bin
 parity_home: /var/lib/parity
 parity_disabled: false
 parity_extra_args:
-parity_deb_url: https://parity-downloads-mirror.parity.io/v1.7.13/x86_64-unknown-linux-gnu/parity_1.7.13_amd64.deb
-parity_deb_sum: sha256:5acb636cc1c2aa40973664faa56b58b4a881cf5170534425cbeae6230dce90be
-parity_version_string: 1.7.13
+parity_deb_url: http://d1h4xl4cr1h0mo.cloudfront.net/v1.10.4/x86_64-unknown-debian-gnu/parity_1.10.4_debian_amd64.deb
+parity_deb_sum: sha256:6d848b278b3623afbadfd6a53c42453ef1603277307c1c62f19d77731532e541
+parity_version_string: 1.10.4
 parity_chain_file:
 ethereum_blockchain_warning: 180
 ethereum_blockchain_critical: 600
@@ -16,3 +16,4 @@ parity_rpc_port: 8545
 parity_rpc_interface: local
 parity_rpc_allowed_ip: []
 parity_warp: true
+ethereum_accounts_files: []

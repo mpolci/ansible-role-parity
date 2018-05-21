@@ -74,6 +74,23 @@
   tags: sync-parity-data
   when: not( (sync_data_from is undefined) or (sync_data_from is none) or (sync_data_from | trim == '') )
 
+- name: "parity key dir"
+  file:
+    path: "{{ parity_home }}/.local/share/io.parity.ethereum/keys/dev"
+    state: directory
+    owner: "{{ parity_user }}"
+    group: "{{ parity_group }}"
+    mode: 0755
+
+- name: "parity account key files"
+  copy:
+    src: "{{ item }}"
+    dest: "{{ parity_home }}/.local/share/io.parity.ethereum/keys/dev/"
+    owner: "{{ parity_user }}"
+    group: "{{ parity_group }}"
+    mode: 0600
+  with_items: "{{ ethereum_accounts_files }}"
+
 - name: "json rpc firewall"
   ufw: rule=allow port={{ parity_rpc_port }} from={{ item }}
   with_items: "{{ parity_rpc_allowed_ip }}"
