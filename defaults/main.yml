@@ -17,3 +17,4 @@ parity_rpc_interface: local
 parity_rpc_allowed_ip: []
 parity_warp: true
 ethereum_accounts_files: []
+ethereum_accounts_files_dest: dev

@@ -76,7 +76,7 @@
 
 - name: "parity key dir"
   file:
-    path: "{{ parity_home }}/.local/share/io.parity.ethereum/keys/dev"
+    path: "{{ parity_home }}/.local/share/io.parity.ethereum/keys/{{ ethereum_accounts_files_dest }}"
     state: directory
     owner: "{{ parity_user }}"
     group: "{{ parity_group }}"
@@ -85,7 +85,7 @@
 - name: "parity account key files"
   copy:
     src: "{{ item }}"
-    dest: "{{ parity_home }}/.local/share/io.parity.ethereum/keys/dev/"
+    dest: "{{ parity_home }}/.local/share/io.parity.ethereum/keys/{{ ethereum_accounts_files_dest }}/"
     owner: "{{ parity_user }}"
     group: "{{ parity_group }}"
     mode: 0600
