@@ -5,9 +5,9 @@ parity_dst_bindir: /usr/bin
 parity_home: /var/lib/parity
 parity_disabled: false
 parity_extra_args:
-parity_deb_url: http://d1h4xl4cr1h0mo.cloudfront.net/v1.10.4/x86_64-unknown-debian-gnu/parity_1.10.4_debian_amd64.deb
-parity_deb_sum: sha256:6d848b278b3623afbadfd6a53c42453ef1603277307c1c62f19d77731532e541
-parity_version_string: 1.10.4
+parity_source: https://releases.parity.io/ethereum/v2.1.11/x86_64-unknown-linux-gnu/parity
+parity_sum: sha256:f3255a22e561f708c139f406715409665eb2fa519ccaa56d270e543efbc975e7
+parity_version_string: 2.1.11
 parity_chain_file:
 ethereum_blockchain_warning: 180
 ethereum_blockchain_critical: 600

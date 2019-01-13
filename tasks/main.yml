@@ -13,14 +13,13 @@
     state: directory
     recurse: yes
 
-#- name: download parity bin file
-#  get_url: url={{ parity_source }} dest={{ parity_dst_bindir }}/parity checksum={{ parity_sum }}
-
-#- name: copy parity bin file
-#  copy: src=files/parity dest={{ parity_dst_bindir }}/parity owner=root group=staff mode=0755
+- name: "remove old parity package (no longer supported)"
+  package:
+    name: parity
+    state: absent
 
 - name: "check installed parity version"
-  shell: "dpkg -s parity | grep '^Version:' | sed -n -e 's/^Version: //p'"
+  shell: "parity --version | grep 'version Parity' | sed -n -E -e 's/.*version Parity\/v([0-9\\.]*)-.*/\\1/p'"
   register: parity_version
   ignore_errors: yes
   failed_when: false
@@ -29,23 +28,17 @@
 
 - set_fact: parity_installed={{ parity_version.stdout_lines[0] is defined and parity_version.stdout_lines[0] == parity_version_string }}
 
-- name: "download parity .deb package"
+- name: "download parity bin file"
   get_url:
-    url: "{{ parity_deb_url }}"
-    dest: /root/parity.deb
-    checksum: "{{ parity_deb_sum }}"
-  register: downloaded
+    url: "{{ parity_source }}"
+    dest: "{{ parity_dst_bindir }}/parity"
+    checksum: "{{ parity_sum }}"
+    owner: root
+    group: staff
+    mode: 0755
   when: not parity_installed
-
-- name: "install parity .deb package"
-  apt: deb="/root/parity.deb"
-  when: downloaded is defined and downloaded.changed
   notify:
     - stop parity
-
-- name: "delete parity .deb package"
-  file: path="/root/parity.deb" state=absent
-#  when: downloaded is defined and downloaded.changed
 
 - name: "parity config file"
   template:
