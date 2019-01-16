@@ -11,8 +11,8 @@ ExecStart={{ parity_dst_bindir }}/parity --config {{ parity_home }}/config.toml 
 
 Restart=always
 PrivateTmp=true
-TimeoutStopSec=90s
-TimeoutStartSec=10s
+TimeoutStopSec=120s
+TimeoutStartSec=20s
 RestartSec=15s
 StartLimitInterval=4h
 StartLimitBurst=500
